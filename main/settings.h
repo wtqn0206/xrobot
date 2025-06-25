@@ -2,7 +2,8 @@
 #define SETTINGS_H
 
 #include <string>
-#include <nvs_flash.h>
+
+#include "storage/storage_interface.h"
 
 class Settings {
 public:
@@ -17,10 +18,7 @@ public:
     void EraseAll();
 
 private:
-    std::string ns_;
-    nvs_handle_t nvs_handle_ = 0;
-    bool read_write_ = false;
-    bool dirty_ = false;
+    std::unique_ptr<storage::Storage> storage_manager_;
 };
 
 #endif

@@ -16,6 +16,7 @@ set(SOURCES "audio_codecs/audio_codec.cc"
             "protocols/websocket_protocol.cc"
             "iot/thing.cc"
             "iot/thing_manager.cc"
+            "storage/storage_factory.cc"
             "mcp_server.cc"
             "system_info.cc"
             "application.cc"
@@ -28,12 +29,12 @@ set(SOURCES "audio_codecs/audio_codec.cc"
 
 # 添加平台特定的源文件
 if(ESP_PLATFORM)
-    list(APPEND SOURCES "platform/esp32/esp32_system.cc")
+    list(APPEND SOURCES "platform/esp32/esp32_system.cc" "storage/esp32/nvs_storage.cc")
 else()
-    list(APPEND SOURCES "platform/linux/linux_system.cc")
+    list(APPEND SOURCES "platform/linux/linux_system.cc" "storage/linux/file_storage.cc")
 endif()
 
-set(INCLUDE_DIRS "." "display" "audio_codecs" "protocols" "audio_processing" "platform")
+set(INCLUDE_DIRS "." "display" "audio_codecs" "protocols" "audio_processing" "platform" "storage")
 
 # 添加 IOT 相关文件
 file(GLOB IOT_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/iot/things/*.cc)
